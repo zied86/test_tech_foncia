@@ -8,20 +8,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après le checkout
-        run: |
-          echo "Content of the current directory:"
-          ls -al
 
       - name: Cypress run with Cucumber
         run: |
           npm install
           npm run cypress:execution-allure
-        # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après l'exécution des tests
-        post-job:
-          run: |
-            echo "Content of the 'allure-results' directory:"
-            ls -al allure-results
 
       - name: Get Allure history
         uses: actions/checkout@v2
@@ -30,28 +21,14 @@ jobs:
         with:
           ref: allure
           path: allure
-        # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après le checkout de l'historique Allure
-        run: |
-          echo "Content of the 'allure' directory:"
-          ls -al allure
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
         if: always()
-        # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après la génération du rapport Allure
-        post-job:
-          run: |
-            echo "Content of the 'allure' directory after report generation:"
-            ls -al allure
 
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
-        # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après le déploiement sur GitHub Pages
-        post-job:
-          run: |
-            echo "Content of the 'allure-history' directory after deployment:"
-            ls -al allure-history
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: allure
