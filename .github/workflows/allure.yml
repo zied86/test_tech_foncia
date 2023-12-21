@@ -34,3 +34,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: allure
           publish_dir: allure-history
+          user_name: 'GitHub Actions'
+          user_email: 'actions@github.com'
+          commit_message: 'Deploy Allure report to allure branch'
