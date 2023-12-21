@@ -14,7 +14,9 @@ jobs:
           ls -al
 
       - name: Cypress run with Cucumber
-        run: npm run cypress:execution-allure
+        run: |
+          npm install
+          npm run cypress:execution-allure
         # Ajoutez une commande de journalisation pour afficher le contenu du répertoire après l'exécution des tests
         post-job:
           run: |
