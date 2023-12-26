@@ -25,8 +25,9 @@ jobs:
       - name: Copy Allure history
         run: |
           mkdir -p allure-results/history
-          ls -al allure/last-history # Ajout de cette ligne pour déboguer
-          cp -R allure/last-history/* allure-results/history || true
+          ls -al gh-pages/last-history # Ajout de cette ligne pour déboguer
+          cp -R gh-pages/last-history/* allure-results/history || true
+
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
