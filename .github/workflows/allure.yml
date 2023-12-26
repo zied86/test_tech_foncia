@@ -34,9 +34,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: main  # Utilisez 'main' ou 'master' selon votre configuration
+          publish_branch: gh-pages  # Utilisez une branche différente pour la publication
           publish_dir: allure-report 
           user_name: 'GitHub Actions'
           user_email: 'actions@github.com'
-          commit_message: 'Deploy Allure report to main branch'
-
+          commit_message: 'Deploy Allure report to gh-pages branch'
