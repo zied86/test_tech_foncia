@@ -22,11 +22,11 @@ jobs:
           ref: allure
           path: allure
 
-      - name: Copy Allure history
-        run: |
-          mkdir -p allure-results/history
-          ls -al gh-pages/last-history # Ajout de cette ligne pour déboguer
-          cp -R gh-pages/last-history/* allure-results/history || true
+      # - name: Copy Allure history
+      #   run: |
+      #     mkdir -p allure-results/history
+      #     ls -al gh-pages/last-history # Ajout de cette ligne pour déboguer
+      #     cp -R gh-pages/last-history/* allure-results/history || true
 
 
       - name: Generate Allure Report
