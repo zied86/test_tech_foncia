@@ -15,7 +15,7 @@ jobs:
           command: npm run cypress:execution-allure
 
       - name: Get Allure history
-        uses: actions/checkout@v2
+        run: mkdir gh-pages
         if: always()
         continue-on-error: true
         with:
