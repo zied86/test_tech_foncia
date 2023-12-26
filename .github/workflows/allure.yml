@@ -1,9 +1,6 @@
 name: Allure Integration
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   cypress-run:
@@ -13,22 +10,30 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cypress run with Cucumber
-        uses: cypress-io/github-action@v4.2.0
+        run: |
+          npm install
+          npm run cypress:execution-allure
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
         with:
-          command: npm run cypress:execution-allure
+          ref: allure
+          path: allure
 
       - name: Copy Allure history
         run: |
           mkdir -p allure-results/history
-          cp -R gh-pages/last-history/* allure-results/history || true
+          ls -al allure/last-history # Ajout de cette ligne pour déboguer
+          cp -R allure/last-history/* allure-results/history || true
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
-        with:
-          allure_results: allure-results
-          gh_pages: allure
+        if: always()
 
       - name: Deploy report to Github Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
