@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: cucumber-allure-report
-          path: /home/runner/work/newCyLearn2/newCyLearn2/allure-report
+          path: allure-report
