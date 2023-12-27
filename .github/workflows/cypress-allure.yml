@@ -8,7 +8,6 @@ on:
   push:
     branches: [ "main" ]
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -19,8 +18,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: checkout code from Repo
+      - name: Checkout code from Repo
         uses: actions/checkout@v3
+
       - name: Cypress.io
         # You may pin to the exact commit or the version.
         # uses: cypress-io/github-action@30008f1458a5a2c97054bfe118fe33d75976c482
@@ -30,16 +30,18 @@ jobs:
           # Command that overrides cypress run
           install-command: npm ci
 
-      - name: install allure
+      - name: Install allure
         run: npm install -g allure-commandline --save-dev && npm i -D @shelex/cypress-allure-plugin
-      - name: generate report
+
+      - name: Generate report
         run: |
           ls -al
           npm run cypress:execution-allure
           ls -al allure-report
 
-      - name: upload report
+      - name: Upload report
         uses: actions/upload-artifact@v2
         with:
           name: cucumber-allure-report
           path: allure-report
+
