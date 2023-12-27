@@ -1,29 +1,19 @@
 name: Allure Integration
 
-on:
-  push:
-    branches:
-      - main  # Vous pouvez ajuster cette branche en fonction de votre configuration
+on: [push]
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run with Cucumber
+        uses: cypress-io/github-action@v4.2.0 # use the explicit version number
         with:
-          node-version: 14
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Cypress run with Cucumber and Allure
-        run: npm run cypress:execution-allure
-
+          command: npm run cypress:execution-allure
       - name: Get Allure history
         uses: actions/checkout@v2
         if: always()
@@ -31,18 +21,20 @@ jobs:
         with:
           ref: allure
           path: allure
-
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@master
         if: always()
-
+        with:
+          allure_results: allure-results
+          gh_pages: allure
       - name: Deploy report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: allure
-          publish_dir: allure-history
-          user_name: 'GitHub Actions'
-          user_email: 'actions@github.com'
-          commit_message: 'Deploy Allure report to allure branch'
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: allure
+            publish_dir: allure-history
+            user_name: 'GitHub Actions'
+            user_email: 'actions@github.com'
+            commit_message: 'Deploy Allure report to allure branch'
+                
