@@ -33,7 +33,11 @@ jobs:
       - name: install allure
         run: npm install -g allure-commandline --save-dev && npm i -D @shelex/cypress-allure-plugin
       - name: generate report
-        run: npm run cypress:execution-allure
+        run: |
+          ls -al
+          npm run cypress:execution-allure
+          ls -al allure-report
+
       - name: upload report
         uses: actions/upload-artifact@v2
         with:
