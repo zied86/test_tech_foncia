@@ -5,16 +5,8 @@
 const acceptCookiesSelector = "app-foncia-cookie-banner > div:nth-of-type(2)";
 const urlHomePage = "https://fr.foncia.com/";
 const menuButtonSelector = "div:nth-of-type(3) > p-button > button";
-const expectedSectionsSelector = {
-  "Acheter": ":nth-child(1) > .header-tab-link",
-  "Louer": ":nth-child(2) > .header-tab-link",
-  "Vendre": ":nth-child(3) > .header-tab-link",
-  "Gestion locative": ":nth-child(4) > .header-tab-link",
-  "Syndic": ":nth-child(5) > .header-tab-link",
-  "Vacances": ":nth-child(6) > .header-tab-link",
-  "Découvrir Foncia": ":nth-child(7) > .header-tab-link",
-  "Carrières": ":nth-child(8) > .header-tab-link",
-};
+const allSectionsSelector = "a.header-tab-link.ng-star-inserted";
+  
 const projectSelector = "#projectToggle";
 const selectLouer = ":nth-child(2) > .p-radiobutton-label";
 const selectPropertyType = '#propertyToggle';
@@ -54,18 +46,18 @@ class HomePage {
   verifySections() {
     cy.fixture('sections').then((sections) => {
       const expectedSections = sections.expectedSections;
-
-      // Vérifier chaque section
-      for (const section of expectedSections) {
-        const selector = expectedSectionsSelector[section];
-        if (selector) {
+      cy.get(allSectionsSelector).each(($element, index) => {
+        if (index < expectedSections.length) {
+          const section = expectedSections[index];
+          const text = $element.text().replace(/\s/g, '').trim();
+          expect(text).to.equal(section);
           cy.log(`Vérification de la section ${section}`);
-          // Utiliser des assertions plutôt que des logs pour les erreurs
-          cy.get(selector).should('exist').and('contain', section);
-        }
-      }
+          cy.log(`Texte de l'élément ${index + 1}: ${text}`);
+        } 
+      });
     });
   }
+  
 
   selectproject(city: string, price: string) {
     cy.get(projectSelector).click();
