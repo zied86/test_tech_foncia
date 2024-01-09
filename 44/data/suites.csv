@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Jan 09 11:53:44 GMT 2024","Tue Jan 09 11:53:59 GMT 2024","15242","","Recherche d'appartement sur le site Foncia","","","","Recherche d'un appartement à louer à Paris avec un loyer MAX ""1500""€",""
+"passed","Tue Jan 09 11:53:31 GMT 2024","Tue Jan 09 11:53:44 GMT 2024","12459","","Recherche d'appartement sur le site Foncia","","","","Vérification des éléments de la page d'accueil",""
